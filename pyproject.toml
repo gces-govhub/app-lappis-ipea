@@ -1,0 +1,80 @@
+[tool.poetry]
+name = "python-applications"
+version = "0.1.0"
+description = "Gestão de Dados do IPEA - Aplicações Python"
+authors = ["Lappis UNB"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+apache-airflow = "2.8.1"
+dbt-core = "*"
+dbt-postgres = "*"
+pandas = "*"
+requests = "*"
+sqlalchemy = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+ruff = "*"
+pytest = "*"
+pytest-cov = "*"
+mypy = "*"
+jupyter = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 90
+target-version = ["py311"]
+skip-string-normalization = false
+include = "\\.pyi?$"
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 90
+target-version = "py311"
+exclude = [
+    ".git",
+    ".venv",
+    "migrations",
+    "build",
+    "dist",
+    "*.pyi",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "C90"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

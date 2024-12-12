@@ -1,0 +1,143 @@
+version: '3.8'
+
+# Base configuration for Airflow services
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.8.1-python3.11
+  build:
+    context: .
+    dockerfile: Dockerfile
+  user: "${AIRFLOW_UID:-50000}:0"
+  env_file:
+    - .env
+  volumes:
+    - ./dags:${AIRFLOW_HOME}/dags/
+    - ./plugins:${AIRFLOW_HOME}/plugins
+    - ./notebooks/:${AIRFLOW_HOME}/notebooks
+  depends_on: &airflow-common-depends-on
+    postgres:
+      condition: service_healthy
+
+# Common environment variables for Airflow
+x-airflow-environment: &airflow-common-env
+  AIRFLOW__CORE__DEFAULT_TIMEZONE: 'America/Sao_Paulo'
+  AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true'
+  AIRFLOW__CORE__EXECUTOR: LocalExecutor
+  AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY}
+  AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+  AIRFLOW__CORE__TEST_CONNECTION: Enabled
+  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres/${POSTGRES_DB:-airflow}
+  AIRFLOW__EMAIL__DEFAULT_EMAIL_ON_RETRY: 'false'
+  AIRFLOW__EMAIL__DEFAULT_EMAIL_ON_FAILURE: 'false'
+  AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: 'America/Sao_Paulo'
+  AIRFLOW__WEBSERVER__INSTANCE_NAME: "Ipea - Local Dev!"
+  AIRFLOW__WEBSERVER__NAVBAR_COLOR: '#98DFFF'
+  AIRFLOW__WEBSERVER__RELOAD_ON_PLUGIN_CHANGE: 'true'
+  AIRFLOW__WEBSERVER__SECRET_KEY: '42'
+  PYTHONPATH: '${AIRFLOW_HOME}/dags:${AIRFLOW_HOME}/plugins'
+
+services:
+  # Database
+  postgres:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /mnt/postgres/pgdata:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  # Airflow Services
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 60s
+      start_period: 60s
+      retries: 5
+    restart: always
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-webserver:
+        condition: service_healthy
+
+  # Analytics Tools
+  superset:
+    image: apache/superset:latest
+    environment:
+      SUPERSET_SECRET_KEY: 'supersetadmin'
+      SUPERSET_ENV: development
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: postgres
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+    volumes:
+      - ./mnt/superset_home:/opt/superset_home
+    ports:
+      - "8088:8088"
+    depends_on:
+      - postgres
+    command: >
+      /bin/sh -c "
+      superset fab create-admin --username admin --firstname Admin --lastname User --email admin@superset.com --password admin &&
+      superset db upgrade &&
+      superset init &&
+      superset run -p 8088 -h 0.0.0.0 --with-threads --reload --debugger
+      "
+
+  jupyter:
+    image: jupyter/base-notebook:latest
+    command: >
+      jupyter lab 
+      --ip=0.0.0.0 
+      --no-browser 
+      --allow-root 
+      --NotebookApp.token='' 
+      --NotebookApp.password=''
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/notebooks
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    restart: always
+
+volumes:
+  postgres-db-volume:
+  airflow_logs:
+  superset_home:
+  notebooks:
