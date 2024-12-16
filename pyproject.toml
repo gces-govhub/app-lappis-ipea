@@ -21,6 +21,9 @@ pytest = "*"
 pytest-cov = "*"
 mypy = "*"
 jupyter = "*"
+shandy-sqlfmt = "*"
+sqlfluff = "*"
+sqlfluff-templater-dbt = "*"
 
 [build-system]
 requires = ["poetry-core"]
@@ -78,3 +81,45 @@ warn_unreachable = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+
+[tool.sqlfmt]
+line_length = 90
+dialect = "polyglot"
+exclude = [
+    ".git/",
+    ".venv/",
+    "build/",
+    "dist/",
+]
+
+[tool.sqlfluff.core]
+dialect = "postgres"
+templater = "dbt"
+max_line_length = 90
+exclude_rules = "L016"
+
+[tool.sqlfluff.indentation]
+indented_joins = true
+indented_using_on = true
+template_blocks_indent = true
+
+[tool.sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "lower"
+
+[tool.sqlfluff.rules.capitalisation.identifiers]
+capitalisation_policy = "lower"
+
+[tool.sqlfluff.rules.capitalisation.functions]
+extended_capitalisation_policy = "lower"
+
+[tool.sqlfluff.rules.capitalisation.literals]
+capitalisation_policy = "lower"
+
+[tool.sqlfluff.templater]
+unwrap_wrapped_queries = true
+
+[tool.sqlfluff.templater.dbt]
+project_dir = "."
+profiles_dir = "."
+profile = "default"
+target = "dev"
