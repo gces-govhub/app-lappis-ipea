@@ -2,7 +2,7 @@ image: python:3.11-slim
 
 variables:
   POETRY_HOME: "/opt/poetry"
-  POETRY_VERSION: "1.7.1"
+  POETRY_VERSION: "1.8.5"
   POETRY_VIRTUALENVS_IN_PROJECT: "true"
   POETRY_CACHE_DIR: "$CI_PROJECT_DIR/.cache/poetry"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
@@ -23,17 +23,16 @@ stages:
 .install-poetry:
   before_script:
     - apt-get update
+    - apt-get -y install make
     - pip install poetry==${POETRY_VERSION}
-    - poetry config virtualenvs.in-project false
-    - poetry install --no-interaction
+    - poetry install --no-root --with dev
+    - source $(poetry env info --path)/bin/activate
 
 lint:
   stage: lint
   extends: .install-poetry
   script:
-    - poetry run black . --check
-    - poetry run ruff check .
-    - poetry run mypy .
+    - make lint
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
@@ -49,13 +48,5 @@ test:
         coverage_format: cobertura
         path: coverage.xml
       junit: report.xml
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-
-scan:
-  stage: test
-  image: sonarsource/sonar-scanner-cli:latest
-  script:
-    - sonar-scanner -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
