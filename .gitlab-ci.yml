@@ -50,3 +50,16 @@ test:
       junit: report.xml
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+scan:
+  stage: test
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - sonar-scanner -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - changes:
+      - dags/**
+      - plugins/**
+      - src/**
+      - tests/**
