@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python-applications"
+name = "app_lappis_ipea"
 version = "0.1.0"
 description = "Gestão de Dados do IPEA - Aplicações Python"
 authors = ["Lappis UNB"]
@@ -20,6 +20,8 @@ ruff = "*"
 pytest = "*"
 pytest-cov = "*"
 mypy = "*"
+types-psycopg2 = "*"
+pandas-stubs = "*"
 jupyter = "*"
 shandy-sqlfmt = "*"
 sqlfluff = "*"
@@ -58,6 +60,8 @@ exclude = [
     "build",
     "dist",
     "*.pyi",
+    ".ipynb_checkpoints",
+    "*.ipynb"
 ]
 
 [tool.ruff.lint]
