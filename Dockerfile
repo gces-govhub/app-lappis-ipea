@@ -36,7 +36,7 @@ USER airflow
 # sempre será sincronizado via git sync ou via volumes localmente 
 RUN pip install --no-cache-dir poetry
 WORKDIR /opt
-COPY poetry.lock pyproject.toml  .
+COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-root
 
 WORKDIR ${AIRFLOW_HOME}
