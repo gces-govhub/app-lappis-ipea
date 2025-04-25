@@ -259,28 +259,126 @@ docker compose up -d --build
 
 ### macOS
 
-- Project setup  
-  ![print1](prints/print1.png)
-- Virtual environment creation and dependency installation  
-  ![print2](prints/print2.png)
-- Fernet key generation  
-  ![print3](prints/print3.png)
-- Docker Compose running  
-  ![print4](prints/print4.png)
-- Airflow access  
-  ![print5](prints/print5.png)
-- Jupyter access  
-  ![print6](prints/print6.png)
-- Superset access  
-  ![print7](prints/print7.png)
+- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
+  *Running the Docker build command.*
+
+  ---
+
+- ![print3-openDocker.png](prints/print3-openDocker.png)  
+  *Docker Desktop open and running.*
+
+  ---
+
+- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
+  *Project folder after cloning the repository.*
+
+  ---
+
+- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
+  *Docker build completed successfully.*
+  ---
+
+
+- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
+  *Airflow web interface running and accessible.*
+  ---
+
+
+- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
+  *Jupyter Notebook interface running and accessible.*
+  ---
+
+
+- ![print8-superSET.png](prints/print8-superSET.png)  
+  *Superset interface running and accessible.*
+  ---
+
+- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
+  *All Docker containers running and active.*
+
+  ---
 
 ### Linux
 
-> todo
+- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
+  *Running the Docker build command.*
+
+  ---
+
+- ![print3-openDocker.png](prints/print3-openDocker.png)  
+  *Docker Desktop open and running.*
+
+  ---
+
+- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
+  *Project folder after cloning the repository.*
+
+  ---
+
+- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
+  *Docker build completed successfully.*
+  ---
+
+
+- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
+  *Airflow web interface running and accessible.*
+  ---
+
+
+- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
+  *Jupyter Notebook interface running and accessible.*
+  ---
+
+
+- ![print8-superSET.png](prints/print8-superSET.png)  
+  *Superset interface running and accessible.*
+  ---
+
+- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
+  *All Docker containers running and active.*
+
+  ---
 
 ### Windows
 
-> todo
+- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
+  *Running the Docker build command.*
+
+  ---
+
+- ![print3-openDocker.png](prints/print3-openDocker.png)  
+  *Docker Desktop open and running.*
+
+  ---
+
+- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
+  *Project folder after cloning the repository.*
+
+  ---
+
+- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
+  *Docker build completed successfully.*
+  ---
+
+
+- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
+  *Airflow web interface running and accessible.*
+  ---
+
+
+- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
+  *Jupyter Notebook interface running and accessible.*
+  ---
+
+
+- ![print8-superSET.png](prints/print8-superSET.png)  
+  *Superset interface running and accessible.*
+  ---
+
+- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
+  *All Docker containers running and active.*
+
+  ---
 
 
 ## 💻 Development
