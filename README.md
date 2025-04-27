@@ -258,9 +258,46 @@ docker compose up -d --build
 ## 📸 Prints de Instalação e Execução
 
 **macOS / Linux / Windows**  
-(imagens mostrando comandos e serviços rodando)
 
----
+- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
+  *Executando o comando de build do Docker.*
+
+  ---
+
+- ![print3-openDocker.png](prints/print3-openDocker.png)  
+  *Docker Desktop aberto e em execução.*
+
+  ---
+
+- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
+  *Pasta do projeto após clonar o repositório.*
+
+  ---
+
+- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
+  *Build do Docker concluído com sucesso.*
+
+  ---
+
+- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
+  *Interface web do Airflow em execução e acessível.*
+
+  ---
+
+- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
+  *Interface do Jupyter Notebook em execução e acessível.*
+
+  ---
+
+- ![print8-superSET.png](prints/print8-superSET.png)  
+  *Interface do Superset em execução e acessível.*
+
+  ---
+
+- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
+  *Todos os containers do Docker em execução e ativos.*
+
+  ---
 
 ## 💻 Desenvolvimento
 
@@ -339,9 +376,8 @@ git config --global commit.gpgsign true
 
 ## 📚 Documentação
 
-- [Documentação do Airflow](https://airflow.apache.org/docs/)  
-- [Documentação do dbt](https://docs.getdbt.com/)  
-- [Documentação do Superset](https://superset.apache.org/docs/intro)  
+- [Documentação do Airflow](
 
----
-
+https://airflow.apache.org/)
+- [Documentação do dbt](https://docs.getdbt.com/)
+- [Documentação do Superset](https://superset.apache.org/)
