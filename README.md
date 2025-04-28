@@ -1,403 +1,321 @@
-# Data Pipeline Project
+# Projeto de Pipeline de Dados  
+[![Contribua com o projeto 🚀](https://img.shields.io/badge/Contribua%20com%20o%20projeto-🚀-brightgreen)](CONTRIBUTING.md)
 
-This project implements a modern data stack using Airflow, dbt, Jupyter, and Superset for data orchestration, transformation, analysis, and visualization.
-
----
-
-## 🚀 Stack Components
-
-- **Apache Airflow**: Workflow orchestration  
-- **dbt**: Data transformation  
-- **Jupyter**: Interactive data analysis  
-- **Apache Superset**: Data visualization and exploration  
-- **Docker**: Containerization and local development  
-- **Make**: Build automation and setup  
+Este projeto implementa uma stack moderna de dados usando Airflow, dbt, Jupyter e Superset para orquestração, transformação, análise e visualização de dados.
 
 ---
 
-## 📋 Prerequisites
+## 🚀 Componentes da Stack
 
-- Docker and Docker Compose  
+- **Apache Airflow**: Orquestração de workflows  
+- **dbt**: Transformação de dados  
+- **Jupyter**: Análise de dados interativa  
+- **Apache Superset**: Visualização e exploração de dados  
+- **Docker**: Containerização e desenvolvimento local  
+- **Make**: Automação de build e configuração  
+
+---
+
+## 📋 Pré-requisitos
+
+- Docker e Docker Compose  
 - Make  
 - Python 3.x  
 - Git  
 
 ---
 
-## 🔧 Setup
+## 🔧 Configuração
 
-Clone the repository:
+Clone o repositório:
 
 ```bash
 git clone git@gitlab.com:lappis-unb/gest-odadosipea/app-lappis-ipea.git
 cd app-lappis-ipea
 ```
 
-Run the setup using Make:
+Execute o setup usando Make:
 
 ```bash
 make setup
 ```
 
-This will:
+Isso vai:
 
-- Create necessary virtual environments  
-- Install dependencies  
-- Set up pre-commit hooks  
-- Configure development environment  
+- Criar ambientes virtuais necessários  
+- Instalar as dependências  
+- Configurar hooks de pre-commit  
+- Preparar o ambiente de desenvolvimento  
 
+---
 
-## 🏃‍♂️ Running Locally
+## 🏃‍♂️ Rodando Localmente
 
-> **Note:** The following step-by-step is for **macOS**. For Linux and Windows, see the specific sections below.
+> **Nota:** O passo a passo abaixo é para **macOS**. Para Linux e Windows, veja as seções específicas.
 
-### 1. Install Homebrew (if you don't have it)
+### 1. Instalar o Homebrew (se ainda não tiver)
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Install Python and pip via Homebrew (if needed)
+### 2. Instalar Python e pip via Homebrew (se precisar)
 
 ```bash
 brew install python
 ```
 
-Check if `python3` and `pip3` are installed:
+Verifique se `python3` e `pip3` estão instalados:
 
 ```bash
 python3 --version
 pip3 --version
 ```
 
-### 3. Create and activate the virtual environment
+### 3. Criar e ativar o ambiente virtual
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 4. Install the `cryptography` dependency
+### 4. Instalar a dependência `cryptography`
 
 ```bash
 pip install cryptography
 ```
 
-### 5. Generate a Fernet key
+### 5. Gerar uma chave Fernet
 
 ```bash
 python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-Copy the generated key for the next step.
+Copie a chave gerada para o próximo passo.
 
-### 6. Create the `.env` file
+### 6. Criar o arquivo `.env`
 
-Create a `.env` file in the project root with the following content, replacing `<your_fernet_key>` with the generated key:
+No diretório do projeto, crie o `.env` com:
 
 ```env
 AIRFLOW__CORE__EXECUTOR=LocalExecutor
-AIRFLOW__CORE__FERNET_KEY=<your_fernet_key>
+AIRFLOW__CORE__FERNET_KEY=<sua_fernet_key>
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
 ```
 
-### 7. Start Docker Desktop
+### 7. Iniciar o Docker Desktop
 
-Make sure Docker Desktop is open and running before proceeding.
+Deixe o Docker aberto e rodando.
 
-### 8. Start the containers with Docker Compose
+### 8. Subir os containers com Docker Compose
 
 ```bash
 docker compose up -d --build
 ```
 
-### 9. Access the services
+### 9. Acessar os serviços
 
-- **Airflow**: http://localhost:8080  
-  - Login: `airflow`  
-  - Password: `airflow`
+- **Airflow**: http://localhost:8080 (login: `airflow`, senha: `airflow`)  
+- **Jupyter**: http://localhost:8888 (usar o token do terminal)  
+- **Superset**: http://localhost:8088 (login: `admin`, senha: `admin`)  
 
-- **Jupyter**: http://localhost:8888  
-  - Copy the token shown in the terminal
+---
 
-- **Superset**: http://localhost:8088  
-  - Login: `admin`  
-  - Password: `admin`
+## 🐧 Rodando no **Linux**
 
-## 🐧 Running on **Linux**
+> **Nota:** Essa seção ainda está em construção, mas você pode seguir os passos abaixo.
 
-> **Note:** This section is under construction. Follow the instructions below and add screenshots after testing on Linux.
-
-### 1. Install dependencies
+### 1. Instalar dependências
 
 ```bash
 sudo apt update
 sudo apt install -y python3 python3-venv python3-pip git docker.io docker-compose
 ```
 
-### 2. (Optional) Add your user to the docker group
+### 2. (Opcional) Adicionar seu usuário ao grupo docker
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-### 3. Clone the repository
+### 3. Clonar o repositório
 
 ```bash
 git clone git@gitlab.com:lappis-unb/gest-odadosipea/app-lappis-ipea.git
 cd app-lappis-ipea
 ```
 
-### 4. Create and activate the virtual environment
+### 4. Criar e ativar o ambiente virtual
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 5. Install the `cryptography` dependency
+### 5. Instalar a dependência `cryptography`
 
 ```bash
 pip install cryptography
 ```
 
-### 6. Generate the Fernet key
+### 6. Gerar a chave Fernet
 
 ```bash
 python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-### 7. Create the `.env` file
+### 7. Criar o arquivo `.env`
 
 ```env
 AIRFLOW__CORE__EXECUTOR=LocalExecutor
-AIRFLOW__CORE__FERNET_KEY=<your_fernet_key>
+AIRFLOW__CORE__FERNET_KEY=<sua_fernet_key>
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
 ```
 
-### 8. Start the containers with Docker Compose
+### 8. Subir os containers
 
 ```bash
 docker compose up -d --build
 ```
 
-### 9. Access the services
+### 9. Acessar os serviços
 
 - **Airflow**: http://localhost:8080  
 - **Jupyter**: http://localhost:8888  
 - **Superset**: http://localhost:8088  
 
+---
 
-## 🪟 Running on **Windows**
+## 🪟 Rodando no **Windows**
 
-> **Note:** This section is under construction. Follow the instructions below and add screenshots after testing on Windows.
+> **Nota:** Essa seção também está em construção.
 
-### 1. Install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) and Ubuntu from Microsoft Store
+### 1. Instalar o [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) e o Ubuntu pela Microsoft Store
 
-### 2. Install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)
+### 2. Instalar o [Docker Desktop para Windows](https://www.docker.com/products/docker-desktop)
 
-- Make sure to enable WSL2 integration in Docker Desktop settings.
+- Ativar a integração com o WSL2 nas configurações do Docker Desktop.
 
-### 3. Install Python and Git in Ubuntu (WSL2)
+### 3. Instalar Python e Git no Ubuntu (WSL2)
 
 ```bash
 sudo apt update
 sudo apt install -y python3 python3-venv python3-pip git
 ```
 
-### 4. Clone the repository
+### 4. Clonar o repositório
 
 ```bash
 git clone git@gitlab.com:lappis-unb/gest-odadosipea/app-lappis-ipea.git
 cd app-lappis-ipea
 ```
 
-### 5. Create and activate the virtual environment
+### 5. Criar e ativar o ambiente virtual
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 6. Install the `cryptography` dependency
+### 6. Instalar a dependência `cryptography`
 
 ```bash
 pip install cryptography
 ```
 
-### 7. Generate the Fernet key
+### 7. Gerar a chave Fernet
 
 ```bash
 python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-### 8. Create the `.env` file
+### 8. Criar o arquivo `.env`
 
 ```env
 AIRFLOW__CORE__EXECUTOR=LocalExecutor
-AIRFLOW__CORE__FERNET_KEY=<your_fernet_key>
+AIRFLOW__CORE__FERNET_KEY=<sua_fernet_key>
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
 ```
 
-### 9. Start the containers with Docker Compose
+### 9. Subir os containers
 
 ```bash
 docker compose up -d --build
 ```
 
-### 10. Access the services
+### 10. Acessar os serviços
 
 - **Airflow**: http://localhost:8080  
 - **Jupyter**: http://localhost:8888  
 - **Superset**: http://localhost:8088  
 
-## 📸 Installation and Execution Screenshots
+---
 
-### macOS
+## 📸 Prints de Instalação e Execução
+
+**macOS / Linux / Windows**  
 
 - ![print1-buildDocker.png](prints/print1-buildDocker.png)  
-  *Running the Docker build command.*
+  *Executando o comando de build do Docker.*
 
   ---
 
 - ![print3-openDocker.png](prints/print3-openDocker.png)  
-  *Docker Desktop open and running.*
+  *Docker Desktop aberto e em execução.*
 
   ---
 
 - ![print4-pastaProj.png](prints/print4-pastaProj.png)  
-  *Project folder after cloning the repository.*
+  *Pasta do projeto após clonar o repositório.*
 
   ---
 
 - ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
-  *Docker build completed successfully.*
-  ---
+  *Build do Docker concluído com sucesso.*
 
+  ---
 
 - ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
-  *Airflow web interface running and accessible.*
-  ---
+  *Interface web do Airflow em execução e acessível.*
 
+  ---
 
 - ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
-  *Jupyter Notebook interface running and accessible.*
+  *Interface do Jupyter Notebook em execução e acessível.*
+
   ---
 
-
 - ![print8-superSET.png](prints/print8-superSET.png)  
-  *Superset interface running and accessible.*
+  *Interface do Superset em execução e acessível.*
+
   ---
 
 - ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
-  *All Docker containers running and active.*
+  *Todos os containers do Docker em execução e ativos.*
 
   ---
 
-### Linux
+## 💻 Desenvolvimento
 
-- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
-  *Running the Docker build command.*
+### Qualidade de Código
 
-  ---
+Esse projeto usa várias ferramentas pra garantir qualidade:
 
-- ![print3-openDocker.png](prints/print3-openDocker.png)  
-  *Docker Desktop open and running.*
+- Hooks de pre-commit  
+- Configurações de lint  
+- Testes automatizados  
 
-  ---
-
-- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
-  *Project folder after cloning the repository.*
-
-  ---
-
-- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
-  *Docker build completed successfully.*
-  ---
-
-
-- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
-  *Airflow web interface running and accessible.*
-  ---
-
-
-- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
-  *Jupyter Notebook interface running and accessible.*
-  ---
-
-
-- ![print8-superSET.png](prints/print8-superSET.png)  
-  *Superset interface running and accessible.*
-  ---
-
-- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
-  *All Docker containers running and active.*
-
-  ---
-
-### Windows
-
-- ![print1-buildDocker.png](prints/print1-buildDocker.png)  
-  *Running the Docker build command.*
-
-  ---
-
-- ![print3-openDocker.png](prints/print3-openDocker.png)  
-  *Docker Desktop open and running.*
-
-  ---
-
-- ![print4-pastaProj.png](prints/print4-pastaProj.png)  
-  *Project folder after cloning the repository.*
-
-  ---
-
-- ![print5-buildCorrect.png](prints/print5-buildCorrect.png)  
-  *Docker build completed successfully.*
-  ---
-
-
-- ![print6-AIRFLOW.png](prints/print6-AIRFLOW.png)  
-  *Airflow web interface running and accessible.*
-  ---
-
-
-- ![print7-JUPYTER.png](prints/print7-JUPYTER.png)  
-  *Jupyter Notebook interface running and accessible.*
-  ---
-
-
-- ![print8-superSET.png](prints/print8-superSET.png)  
-  *Superset interface running and accessible.*
-  ---
-
-- ![print9-containerAtivos.png](prints/print9-containerAtivos.png)  
-  *All Docker containers running and active.*
-
-  ---
-
-
-## 💻 Development
-
-### Code Quality
-
-This project uses several tools to maintain code quality:
-
-- Pre-commit hooks  
-- Linting configurations  
-- Automated testing  
-
-Run linting checks:
+Rodar o lint:
 
 ```bash
 make lint
 ```
 
-Run tests:
+Rodar os testes:
 
 ```bash
 make test
@@ -405,7 +323,7 @@ make test
 
 ---
 
-### Project Structure
+### Estrutura do Projeto
 
 ```
 .
@@ -425,42 +343,41 @@ make test
 
 ---
 
-### Makefile Commands
+### Comandos do Makefile
 
-- `make setup`: Initial project setup  
-- `make lint`: Run linting checks  
-- `make tests`: Run test suite  
-- `make clean`: Clean up generated files  
-- `make build`: Build Docker images  
+- `make setup`: Configura o projeto  
+- `make lint`: Rodar checagem de lint  
+- `make tests`: Rodar testes  
+- `make clean`: Limpar arquivos gerados  
+- `make build`: Buildar imagens Docker  
 
-## 🔐 Git Workflow
+---
 
-This project requires signed commits. To set up GPG signing:
+## 🔐 Fluxo de Git
 
-1. Generate a GPG key:
+Esse projeto exige commits assinados. Para configurar:
+
+1. Gerar uma chave GPG:
 
 ```bash
 gpg --full-generate-key
 ```
 
-2. Configure Git to use GPG signing:
+2. Configurar o Git:
 
 ```bash
-git config --global user.signingkey YOUR_KEY_ID
+git config --global user.signingkey SEU_ID_DE_CHAVE
 git config --global commit.gpgsign true
 ```
 
-3. Add your GPG key to your GitLab account
+3. Adicionar sua chave GPG na conta do GitLab.
 
+---
 
-## 📚 Documentation
+## 📚 Documentação
 
-- [Airflow Documentation](https://airflow.apache.org/docs/)
-- [dbt Documentation](https://docs.getdbt.com/)
-- [Superset Documentation](https://superset.apache.org/docs/intro)
+- [Documentação do Airflow](
 
-## 🤝 Contributing
-
-1. Create a new branch for your feature  
-2. Make changes and ensure all tests pass  
-3. Submit a merge request  
+https://airflow.apache.org/)
+- [Documentação do dbt](https://docs.getdbt.com/)
+- [Documentação do Superset](https://superset.apache.org/)
