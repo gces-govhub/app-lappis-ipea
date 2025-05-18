@@ -30,43 +30,52 @@ jobs:
             .cache/pip
             .cache/poetry
             .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('/poetry.lock') }}
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
 
   lint:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use cached environment
-        uses: actions/cache@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('/poetry.lock') }}
+          python-version: 3.11
+
+      - name: Install Poetry
+        run: |
+          pip install poetry==1.8.5
+          poetry config virtualenvs.in-project true
+          poetry install --no-root --with dev
+
       - name: Run lint
         run: |
-          source .venv/bin/activate
-          make lint
+          poetry run make lint
 
   test:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use cached environment
-        uses: actions/cache@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('/poetry.lock') }}
+          python-version: 3.11
+
+      - name: Install Poetry
+        run: |
+          pip install poetry==1.8.5
+          poetry config virtualenvs.in-project true
+          poetry install --no-root --with dev
+
       - name: Run tests
         run: |
-          source .venv/bin/activate
           poetry run pytest tests --junitxml=report.xml
 
   docker-build-and-push:
     if: github.ref == 'refs/heads/main'
-    needs: setup
     runs-on: ubuntu-latest
     permissions:
       contents: read
