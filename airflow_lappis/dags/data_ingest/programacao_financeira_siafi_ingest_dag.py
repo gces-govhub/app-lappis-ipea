@@ -6,7 +6,7 @@ from postgres_helpers import get_postgres_conn
 
 
 @dag(
-    schedule_interval="@daily",
+    schedule="@daily",
     start_date=datetime(2024, 3, 12),
     catchup=False,
     default_args={
