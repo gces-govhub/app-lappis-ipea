@@ -287,7 +287,8 @@ class ClienteSiafi:
         token = self.get_access_token()
         if not token:
             logger.error("Não foi possível obter o token de acesso.")
-            return {"error": "Falha ao obter o token de acesso."}
+            return None
+
 
         # Configura os cabeçalhos da requisição
         headers = {
