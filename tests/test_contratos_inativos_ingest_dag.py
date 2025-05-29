@@ -1,28 +1,44 @@
-import os
-import sys
 import pytest
-from airflow.models import DagBag
+import yaml
+from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import dag_instance as dag
+from unittest.mock import patch
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-@pytest.fixture(scope="module")
-def dag_bag():
-    """
-    Carrega as DAGs da pasta específica do projeto.
-    """
-    return DagBag(dag_folder="airflow_lappis/dags/data_ingest", include_examples=False)
+def test_dag_loaded():
+    assert dag.dag_id == "api_contratos_inativos_dag"
+    task_ids = [t.task_id for t in dag.tasks]
 
-def test_dag_loaded(dag_bag):
-    """
-    Testa se a DAG 'api_contratos_inativos_dag' foi carregada corretamente no DagBag.
-    """
-    dag_id = "api_contratos_inativos_dag"
+    assert "fetch_and_store_contratos_inativos" in task_ids
+    assert len(task_ids) == 1
 
-    assert dag_id in dag_bag.dags, f"DAG '{dag_id}' não encontrada no DagBag"
 
-    dag = dag_bag.dags[dag_id]
-    assert dag is not None
+@patch("cliente_contratos.ClienteContratos.get_contratos_inativos_by_ug")
+@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag.get_postgres_conn")
+@patch("airflow.models.Variable.get")
+def test_fetch_and_store_contratos_inativos_success(
+    mock_variable_get,
+    mock_get_postgres_conn,
+    mock_insert_data,
+    mock_get_contratos_inativos_by_ug,
+):
+    def variable_side_effect(key, default_var=None):
+        if key == "airflow_orgao":
+            return "orgao_exemplo"
+        elif key == "airflow_variables":
+            return yaml.dump({
+                "orgao_exemplo": {
+                    "codigos_ug": ["111111", "222222"]
+                }
+            })
+        return default_var
 
-    task_ids = [task.task_id for task in dag.tasks]
-    assert "fetch_and_store_contratos_inativos" in task_ids, \
-        "'fetch_and_store_contratos_inativos' não encontrada na DAG"
+    mock_variable_get.side_effect = variable_side_effect
+    mock_get_postgres_conn.return_value = "postgres://fake_conn"
+    mock_get_contratos_inativos_by_ug.return_value = [{"id": 10, "campo": "valor"}]
+
+    task = dag.get_task("fetch_and_store_contratos_inativos")
+    task.execute(context={})
+
+    assert mock_get_contratos_inativos_by_ug.call_count == 2
+    assert mock_insert_data.called
