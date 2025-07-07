@@ -9,7 +9,9 @@ def test_dag_loaded():
     assert len(dag.tasks) == 1
 
 
-@patch("airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_empenhos_by_contrato_id")
+@patch(
+    "airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_empenhos_by_contrato_id"
+)
 @patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_contratos_ids")
 @patch("airflow_lappis.dags.data_ingest.empenhos_ingest_dag.get_postgres_conn")
