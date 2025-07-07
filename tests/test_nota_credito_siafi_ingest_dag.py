@@ -1,5 +1,7 @@
 import pytest
-from airflow_lappis.dags.data_ingest.nota_credito_siafi_ingest_dag import dag_instance as dag
+from airflow_lappis.dags.data_ingest.nota_credito_siafi_ingest_dag import (
+    dag_instance as dag,
+)
 from unittest.mock import patch, MagicMock
 
 
@@ -20,9 +22,7 @@ def test_fetch_and_store_nota_credito_success(
     mock_consultar_nota_credito,
 ):
     mock_get_postgres_conn.return_value = "postgres://fake_conn"
-    mock_get_nota_credito.return_value = [
-        ("110000", "170001", "202312345678")
-    ]
+    mock_get_nota_credito.return_value = [("110000", "170001", "202312345678")]
     mock_consultar_nota_credito.return_value = {"numero": "123456", "valor": 100.0}
 
     task = dag.get_task("fetch_and_store_nota_credito")

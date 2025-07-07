@@ -28,11 +28,7 @@ def test_fetch_and_store_contratos_success(
         if key == "airflow_orgao":
             return "orgao_exemplo"
         elif key == "airflow_variables":
-            return yaml.dump({
-                "orgao_exemplo": {
-                    "codigos_ug": ["123456", "654321"]
-                }
-            })
+            return yaml.dump({"orgao_exemplo": {"codigos_ug": ["123456", "654321"]}})
         return default_var
 
     mock_variable_get.side_effect = variable_side_effect

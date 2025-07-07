@@ -1,9 +1,13 @@
 import pytest
 import yaml
-from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import dag_instance as dag
+from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import (
+    dag_instance as dag,
+)
 from unittest.mock import patch
 
 from airflow_lappis.plugins.cliente_contratos import ClienteContratos
+
+
 def test_dag_loaded():
     assert dag.dag_id == "api_contratos_inativos_dag"
     task_ids = [t.task_id for t in dag.tasks]
@@ -12,7 +16,9 @@ def test_dag_loaded():
     assert len(task_ids) == 1
 
 
-@patch("airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_contratos_inativos_by_ug")
+@patch(
+    "airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_contratos_inativos_by_ug"
+)
 @patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag.get_postgres_conn")
 @patch("airflow.models.Variable.get")
@@ -26,11 +32,7 @@ def test_fetch_and_store_contratos_inativos_success(
         if key == "airflow_orgao":
             return "orgao_exemplo"
         elif key == "airflow_variables":
-            return yaml.dump({
-                "orgao_exemplo": {
-                    "codigos_ug": ["111111", "222222"]
-                }
-            })
+            return yaml.dump({"orgao_exemplo": {"codigos_ug": ["111111", "222222"]}})
         return default_var
 
     mock_variable_get.side_effect = variable_side_effect

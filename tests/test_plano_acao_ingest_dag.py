@@ -2,6 +2,7 @@ import pytest
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.plano_acao_ingest_dag import dag_instance as dag
 
+
 def test_dag_loaded():
     assert dag.dag_id == "api_planos_acao_dag"
     assert "fetch_and_store_planos_acao" in [t.task_id for t in dag.tasks]

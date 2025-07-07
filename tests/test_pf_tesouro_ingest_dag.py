@@ -40,7 +40,9 @@ def test_email_pf_pipeline_success(
 
     def variable_side_effect(key, default_var=None):
         if key == "email_credentials":
-            return '{"email": "x", "password": "x", "imap_server": "x", "sender_email": "x"}'
+            return (
+                '{"email": "x", "password": "x", "imap_server": "x", "sender_email": "x"}'
+            )
         return default_var
 
     mock_variable_get.side_effect = variable_side_effect
