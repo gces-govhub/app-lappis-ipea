@@ -7,9 +7,9 @@ import logging
 import json
 import pandas as pd
 import io
-from cliente_email import fetch_and_process_email
-from cliente_postgres import ClientPostgresDB
-from postgres_helpers import get_postgres_conn
+from airflow_lappis.plugins.cliente_email import fetch_and_process_email
+from airflow_lappis.plugins.cliente_postgres import ClientPostgresDB
+from airflow_lappis.helpers.postgres_helpers import get_postgres_conn
 
 # Configurações básicas da DAG
 default_args = {

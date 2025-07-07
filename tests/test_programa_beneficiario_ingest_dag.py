@@ -7,8 +7,8 @@ def test_dag_loaded():
     assert "fetch_and_store_programa_beneficiario" in [t.task_id for t in dag.tasks]
 
 
-@patch("cliente_ted.ClienteTed.get_ted_by_programa_beneficiario")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_ted.ClienteTed.get_ted_by_programa_beneficiario")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.programa_beneficiario_ingest_dag.get_postgres_conn")
 def test_fetch_and_store_programa_beneficiario_success(
     mock_get_postgres_conn,

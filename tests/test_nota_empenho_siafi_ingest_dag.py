@@ -9,8 +9,8 @@ def test_dag_loaded():
     assert "fetch_and_store_notas_empenho" in [t.task_id for t in dag.tasks]
 
 
-@patch("cliente_siafi.ClienteSiafi.consultar_nota_empenho")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_siafi.ClienteSiafi.consultar_nota_empenho")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.nota_empenho_siafi_ingest_dag.get_postgres_conn")
 @patch("airflow.models.Variable.get")
 def test_fetch_and_store_notas_empenho_success(

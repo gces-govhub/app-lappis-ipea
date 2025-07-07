@@ -10,9 +10,9 @@ def test_dag_loaded():
     assert "fetch_faturas" in task_ids
 
 
-@patch("cliente_contratos.ClienteContratos.get_faturas_by_contrato_id")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.get_contratos_ids")
+@patch("airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_faturas_by_contrato_id")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_contratos_ids")
 @patch("airflow_lappis.dags.data_ingest.faturas_ingest_dag.get_postgres_conn")
 def test_fetch_faturas_success(
     mock_get_postgres_conn,

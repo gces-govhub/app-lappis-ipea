@@ -24,8 +24,8 @@ def test_process_emails_task(mock_fetch_email, mock_var_get):
     assert mock_fetch_email.called
 
 
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.__init__", return_value=None)
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.__init__", return_value=None)
 @patch("airflow_lappis.dags.data_ingest.empenhos_tesouro_ingest_dag.get_postgres_conn")
 @patch("airflow.models.Variable.get")
 def test_insert_to_db_task(mock_var_get, mock_get_conn, mock_db_init, mock_insert_data):

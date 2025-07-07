@@ -7,9 +7,9 @@ def test_dag_loaded():
     assert "fetch_and_store_planos_acao" in [t.task_id for t in dag.tasks]
 
 
-@patch("cliente_ted.ClienteTed.get_planos_acao_by_id_programa")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.get_id_programas")
+@patch("airflow_lappis.plugins.cliente_ted.ClienteTed.get_planos_acao_by_id_programa")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_id_programas")
 @patch("airflow_lappis.dags.data_ingest.plano_acao_ingest_dag.get_postgres_conn")
 def test_fetch_and_store_planos_acao_success(
     mock_get_postgres_conn,

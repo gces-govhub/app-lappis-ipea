@@ -9,8 +9,8 @@ def test_dag_loaded():
     assert "fetch_and_store_notas_de_credito" in [t.task_id for t in dag.tasks]
 
 
-@patch("cliente_ted.ClienteTed.get_notas_de_credito_by_ug")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_ted.ClienteTed.get_notas_de_credito_by_ug")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.notas_de_credito_ingest_dag.get_postgres_conn")
 @patch("airflow.models.Variable.get")
 def test_fetch_and_store_notas_de_credito_success(
