@@ -5,7 +5,6 @@ from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import (
 from unittest.mock import patch
 
 
-
 def test_dag_loaded():
     assert dag.dag_id == "api_contratos_inativos_dag"
     task_ids = [t.task_id for t in dag.tasks]
