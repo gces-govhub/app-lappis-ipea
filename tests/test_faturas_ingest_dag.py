@@ -28,7 +28,7 @@ def test_fetch_faturas_success(
     ]
 
     task = dag.get_task("fetch_faturas")
-    result = task.execute(context={})
+    task.execute(context={})
 
     assert mock_get_contratos_ids.called
     assert mock_get_faturas.call_count == 2

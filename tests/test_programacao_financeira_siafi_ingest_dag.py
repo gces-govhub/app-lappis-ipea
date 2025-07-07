@@ -34,7 +34,7 @@ def test_fetch_and_store_programacao_financeira_success(
     }
 
     task = dag.get_task("fetch_and_store_programacao_financeira")
-    result = task.execute(context={})
+    task.execute(context={})
 
     assert mock_get_programacoes.called
     assert mock_consultar_programacao.called

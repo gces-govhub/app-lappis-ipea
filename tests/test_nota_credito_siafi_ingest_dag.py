@@ -25,7 +25,7 @@ def test_fetch_and_store_nota_credito_success(
     mock_consultar_nota_credito.return_value = {"numero": "123456", "valor": 100.0}
 
     task = dag.get_task("fetch_and_store_nota_credito")
-    result = task.execute(context={})
+    task.execute(context={})
 
     assert mock_get_nota_credito.called
     assert mock_consultar_nota_credito.called
