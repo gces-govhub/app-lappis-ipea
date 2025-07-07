@@ -1,8 +1,7 @@
-import pytest
 from airflow_lappis.dags.data_ingest.nota_credito_siafi_ingest_dag import (
     dag_instance as dag,
 )
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 
 def test_dag_loaded():

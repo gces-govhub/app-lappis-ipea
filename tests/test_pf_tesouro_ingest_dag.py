@@ -1,6 +1,4 @@
-import pytest
 import pandas as pd
-import io
 from unittest.mock import patch, MagicMock
 from airflow_lappis.dags.data_ingest.pf_tesouro_ingest_dag import dag as dag_instance
 

@@ -1,4 +1,3 @@
-import pytest
 import yaml
 from airflow_lappis.dags.data_ingest.contratos_ingest_dag import dag_instance as dag
 from unittest.mock import patch

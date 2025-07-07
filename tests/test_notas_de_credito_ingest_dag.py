@@ -1,4 +1,3 @@
-import pytest
 import yaml
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.notas_de_credito_ingest_dag import (

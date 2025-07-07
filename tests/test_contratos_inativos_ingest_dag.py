@@ -1,11 +1,9 @@
-import pytest
 import yaml
 from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import (
     dag_instance as dag,
 )
 from unittest.mock import patch
 
-from airflow_lappis.plugins.cliente_contratos import ClienteContratos
 
 
 def test_dag_loaded():

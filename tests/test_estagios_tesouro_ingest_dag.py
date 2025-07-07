@@ -1,6 +1,4 @@
-import pytest
 from unittest.mock import patch, MagicMock
-from airflow.models import Variable
 from airflow_lappis.dags.data_ingest.estagios_tesouro_ingest_dag import dag
 
 

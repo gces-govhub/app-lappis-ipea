@@ -1,5 +1,4 @@
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.cronograma_ingest_dag import dag_instance as dag
 
 

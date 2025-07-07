@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.programacao_financeira_siafi_ingest_dag import (
     dag_instance as dag,

@@ -1,4 +1,3 @@
-import pytest
 import yaml
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.nota_empenho_siafi_ingest_dag import (
