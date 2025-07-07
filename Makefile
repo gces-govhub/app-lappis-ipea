@@ -1,4 +1,4 @@
-export PYTHONPATH := $(CURDIR)/airflow_lappis
+export PYTHONPATH := $(CURDIR)
 export MYPYPATH := $(CURDIR):$(CURDIR)/airflow_lappis/dags:$(CURDIR)/airflow_lappis/helpers:$(CURDIR)/airflow_lappis/plugins
 
 setup:

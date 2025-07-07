@@ -1,6 +1,6 @@
-import pytest
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.plano_acao_ingest_dag import dag_instance as dag
+
 
 def test_dag_loaded():
     assert dag.dag_id == "api_planos_acao_dag"

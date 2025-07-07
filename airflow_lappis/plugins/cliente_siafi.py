@@ -289,7 +289,6 @@ class ClienteSiafi:
             logger.error("Não foi possível obter o token de acesso.")
             return None
 
-
         # Configura os cabeçalhos da requisição
         headers = {
             "accept": "application/json",

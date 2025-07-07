@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 from airflow_lappis.dags.data_ingest.programas_ingest_dag import dag_instance as dag
 
@@ -23,7 +22,9 @@ def test_fetch_and_update_programas_success(
 ):
     mock_get_postgres_conn.return_value = "postgres://fake_conn"
     mock_get_id_programas.return_value = ["1"]
-    mock_get_programa_by_id.return_value = [{"id_programa": "1", "nome": "Programa Teste"}]
+    mock_get_programa_by_id.return_value = [
+        {"id_programa": "1", "nome": "Programa Teste"}
+    ]
 
     task = dag.get_task("fetch_and_update_programas")
     task.execute(context={})
@@ -31,7 +32,9 @@ def test_fetch_and_update_programas_success(
     mock_get_id_programas.assert_called_once()
     mock_get_programa_by_id.assert_called_once_with("1")
     mock_alter_table.assert_called_once_with(
-        {"id_programa": "1", "nome": "Programa Teste"}, "programas", schema="transfere_gov"
+        {"id_programa": "1", "nome": "Programa Teste"},
+        "programas",
+        schema="transfere_gov",
     )
     mock_insert_data.assert_called_once_with(
         [{"id_programa": "1", "nome": "Programa Teste"}],

@@ -1,7 +1,8 @@
-import pytest
 import yaml
 from unittest.mock import patch
-from airflow_lappis.dags.data_ingest.notas_de_credito_ingest_dag import dag_instance as dag
+from airflow_lappis.dags.data_ingest.notas_de_credito_ingest_dag import (
+    dag_instance as dag,
+)
 
 
 def test_dag_loaded():

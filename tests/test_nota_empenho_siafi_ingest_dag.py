@@ -1,7 +1,8 @@
-import pytest
 import yaml
 from unittest.mock import patch
-from airflow_lappis.dags.data_ingest.nota_empenho_siafi_ingest_dag import dag_instance as dag
+from airflow_lappis.dags.data_ingest.nota_empenho_siafi_ingest_dag import (
+    dag_instance as dag,
+)
 
 
 def test_dag_loaded():
@@ -39,4 +40,4 @@ def test_fetch_and_store_notas_empenho_success(
     task.execute(context={})
 
     assert mock_consultar_nota_empenho.call_count == 9  # 3 anos × 3 chamadas cada
-    assert mock_insert_data.call_count == 6             # 3 anos × 2 inserções por ano
+    assert mock_insert_data.call_count == 6  # 3 anos × 2 inserções por ano

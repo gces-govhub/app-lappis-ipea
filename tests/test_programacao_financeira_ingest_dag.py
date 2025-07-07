@@ -1,7 +1,8 @@
-import pytest
 import yaml
-from unittest.mock import patch, MagicMock
-from airflow_lappis.dags.data_ingest.programacao_financeira_ingest_dag import dag_instance as dag
+from unittest.mock import patch
+from airflow_lappis.dags.data_ingest.programacao_financeira_ingest_dag import (
+    dag_instance as dag,
+)
 
 
 def test_dag_loaded():
@@ -11,7 +12,9 @@ def test_dag_loaded():
 
 @patch("airflow_lappis.plugins.cliente_ted.ClienteTed.get_programacao_financeira_by_ug")
 @patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
-@patch("airflow_lappis.dags.data_ingest.programacao_financeira_ingest_dag.get_postgres_conn")
+@patch(
+    "airflow_lappis.dags.data_ingest.programacao_financeira_ingest_dag.get_postgres_conn"
+)
 @patch("airflow.models.Variable.get")
 def test_fetch_and_store_programacao_financeira_success(
     mock_variable_get,
