@@ -3,9 +3,9 @@ import yaml
 from airflow.decorators import dag, task
 from airflow.models import Variable
 from datetime import datetime, timedelta
-from postgres_helpers import get_postgres_conn
-from cliente_postgres import ClientPostgresDB
-from cliente_ted import ClienteTed
+from airflow_lappis.helpers.postgres_helpers import get_postgres_conn
+from airflow_lappis.plugins.cliente_postgres import ClientPostgresDB
+from airflow_lappis.plugins.cliente_ted import ClienteTed
 
 
 @dag(

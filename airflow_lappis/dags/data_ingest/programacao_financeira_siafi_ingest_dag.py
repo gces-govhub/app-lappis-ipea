@@ -1,8 +1,8 @@
 from airflow.decorators import dag, task
 from datetime import datetime, timedelta
-from cliente_siafi import ClienteSiafi
-from cliente_postgres import ClientPostgresDB
-from postgres_helpers import get_postgres_conn
+from airflow_lappis.plugins.cliente_siafi import ClienteSiafi
+from airflow_lappis.plugins.cliente_postgres import ClientPostgresDB
+from airflow_lappis.helpers.postgres_helpers import get_postgres_conn
 
 
 @dag(

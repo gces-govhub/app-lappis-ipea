@@ -9,9 +9,9 @@ def test_dag_loaded():
     assert "fetch_and_store_nota_credito" in task_ids
 
 
-@patch("cliente_siafi.ClienteSiafi.consultar_nota_credito")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.get_nota_credito")
+@patch("airflow_lappis.plugins.cliente_siafi.ClienteSiafi.consultar_nota_credito")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_nota_credito")
 @patch("airflow_lappis.dags.data_ingest.nota_credito_siafi_ingest_dag.get_postgres_conn")
 def test_fetch_and_store_nota_credito_success(
     mock_get_postgres_conn,

@@ -9,10 +9,10 @@ def test_dag_loaded():
     assert "fetch_and_update_programas" in task_ids
 
 
-@patch("cliente_ted.ClienteTed.get_programa_by_id_programa")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.alter_table")
-@patch("cliente_postgres.ClientPostgresDB.get_id_programas")
+@patch("airflow_lappis.plugins.cliente_ted.ClienteTed.get_programa_by_id_programa")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.alter_table")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_id_programas")
 @patch("airflow_lappis.dags.data_ingest.programas_ingest_dag.get_postgres_conn")
 def test_fetch_and_update_programas_success(
     mock_get_postgres_conn,

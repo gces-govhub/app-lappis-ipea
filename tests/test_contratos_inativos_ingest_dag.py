@@ -3,7 +3,7 @@ import yaml
 from airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag import dag_instance as dag
 from unittest.mock import patch
 
-
+from airflow_lappis.plugins.cliente_contratos import ClienteContratos
 def test_dag_loaded():
     assert dag.dag_id == "api_contratos_inativos_dag"
     task_ids = [t.task_id for t in dag.tasks]
@@ -12,8 +12,8 @@ def test_dag_loaded():
     assert len(task_ids) == 1
 
 
-@patch("cliente_contratos.ClienteContratos.get_contratos_inativos_by_ug")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_contratos_inativos_by_ug")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.contratos_inativos_ingest_dag.get_postgres_conn")
 @patch("airflow.models.Variable.get")
 def test_fetch_and_store_contratos_inativos_success(

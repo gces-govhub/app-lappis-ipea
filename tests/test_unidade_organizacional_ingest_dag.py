@@ -8,8 +8,8 @@ def test_dag_loaded():
     assert "fetch_estrutura_organizacional_resumida" in task_ids
 
 
-@patch("cliente_estrutura.ClienteEstrutura.get_estrutura_organizacional_resumida")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_estrutura.ClienteEstrutura.get_estrutura_organizacional_resumida")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
 @patch("airflow_lappis.dags.data_ingest.unidade_organizacional_ingest_dag.get_postgres_conn")
 def test_fetch_estrutura_organizacional_resumida_success(
     mock_get_postgres_conn,

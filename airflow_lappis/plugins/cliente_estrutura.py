@@ -1,7 +1,7 @@
 import http
 from typing import Optional
 
-from cliente_base import ClienteBase
+from airflow_lappis.plugins.cliente_base import ClienteBase
 
 
 class ClienteEstrutura(ClienteBase):

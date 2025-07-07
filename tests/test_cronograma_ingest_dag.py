@@ -9,10 +9,10 @@ def test_dag_loaded():
     assert len(dag.tasks) == 1
 
 
-@patch("cliente_contratos.ClienteContratos.get_cronograma_by_contrato_id")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.drop_table_if_exists")
-@patch("cliente_postgres.ClientPostgresDB.get_contratos_ids")
+@patch("airflow_lappis.plugins.cliente_contratos.ClienteContratos.get_cronograma_by_contrato_id")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.drop_table_if_exists")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.get_contratos_ids")
 @patch("airflow_lappis.dags.data_ingest.cronograma_ingest_dag.get_postgres_conn")
 def test_fetch_cronogramas_success(
     mock_get_postgres_conn,

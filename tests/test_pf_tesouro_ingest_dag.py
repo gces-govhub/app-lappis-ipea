@@ -19,9 +19,9 @@ def test_dag_loaded():
         assert task_id in task_ids
 
 
-@patch("cliente_email.fetch_and_process_email")
-@patch("cliente_postgres.ClientPostgresDB.insert_data")
-@patch("cliente_postgres.ClientPostgresDB.remove_duplicates")
+@patch("airflow_lappis.plugins.cliente_email.fetch_and_process_email")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.insert_data")
+@patch("airflow_lappis.plugins.cliente_postgres.ClientPostgresDB.remove_duplicates")
 @patch("airflow.models.Variable.get")
 @patch("airflow_lappis.dags.data_ingest.pf_tesouro_ingest_dag.get_postgres_conn")
 def test_email_pf_pipeline_success(

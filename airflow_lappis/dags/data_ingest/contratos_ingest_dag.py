@@ -4,9 +4,9 @@ from airflow.decorators import dag, task
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.models import Variable
 from datetime import datetime, timedelta
-from postgres_helpers import get_postgres_conn
-from cliente_contratos import ClienteContratos
-from cliente_postgres import ClientPostgresDB
+from airflow_lappis.helpers.postgres_helpers import get_postgres_conn
+from airflow_lappis.plugins.cliente_contratos import ClienteContratos
+from airflow_lappis.plugins.cliente_postgres import ClientPostgresDB
 
 
 @dag(
